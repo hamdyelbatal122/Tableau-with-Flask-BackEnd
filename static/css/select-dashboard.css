@@ -1,0 +1,45 @@
+.tile-container {
+    padding: 2em;
+}  
+
+p, span, a, ul, li, button {
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+    line-height: inherit;
+    word-wrap: break-word;
+}
+
+strong {
+	font-weight: 600;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 300;	
+}
+
+strong {
+  font-weight: 400;
+}
+
+.tile {  
+  width: 100%;
+	display: inline-block;
+	box-sizing: border-box;
+	background: #fff;		
+	padding: 20px;
+    margin-bottom: 10px;
+}
+  
+.title {
+    margin-top: 0px;
+}
+
+#dropdown-icon{
+    margin-bottom: 7px;
+    margin-left: 10px;
+}
+
+.main-content{
+    overflow: hidden;
+}

@@ -1,0 +1,28 @@
+button {
+    margin-top: 2em;
+}
+
+h1 {
+    color: rgb(226, 219, 219);
+}
+
+#dropdown-icon{
+    margin-bottom: 7px;
+    margin-left: 10px;
+}
+
+#vizContainer{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    overflow: auto;
+}
+
+.dropdown-item{
+    padding: 20px 10px;
+    cursor: pointer;
+}
+
+.center{
+    justify-content: center;
+}
