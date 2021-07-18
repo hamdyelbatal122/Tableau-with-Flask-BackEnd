@@ -78,7 +78,6 @@ def homepage(): #index with all the dashboards
                     img_file.write(x.preview_image)
     return render_template("select-dashboard.html")
 
-
 @app.route("/dashboard")    #page of a single dashboard
 @login_required
 def dashboard():
