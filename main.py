@@ -22,7 +22,6 @@ class User(UserMixin):
 
     def get(self, name):
         return users.index(name)
-
 # Check if url to render is safe
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
