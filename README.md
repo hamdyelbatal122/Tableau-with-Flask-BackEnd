@@ -18,4 +18,4 @@ password:   yourpassword
 # Built with
 - Python 3 (Flask framework)
 - Tableau (Rest API and JS API)
-- HTML / CSS / J
+- HTML / CSS / JS
