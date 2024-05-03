@@ -19,5 +19,3 @@ password:   yourpassword
 - Python 3 (Flask framework)
 - Tableau (Rest API and JS API)
 - HTML / CSS / JS
-
-
