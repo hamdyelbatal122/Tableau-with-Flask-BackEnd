@@ -6,7 +6,7 @@ You just need to launch the main.py script. It will start a web server on localh
 There's need to be a Tableau server running on 10.0.55.1  (otherwise you'll have to change the address in the files)
 ```
 Login example:
-username:   user1
+username:   user1  
 password:   yourpassword
 ```
 # Login form example
