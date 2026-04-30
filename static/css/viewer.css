@@ -1,0 +1,138 @@
+/* ========================================
+   DASHBOARD VIEWER STYLES
+   ======================================== */
+
+.hidden {
+    display: none !important;
+}
+
+.dashboard-header.dashboard-header {
+    display: flex;
+}
+
+.dashboard-placeholder {
+    text-align: center;
+    padding: 40px;
+}
+
+.dashboard-placeholder-text {
+    font-size: 16px;
+    color: #666;
+}
+
+.dark-mode .dashboard-placeholder-text {
+    color: #aaa;
+}
+
+.dashboard-placeholder-desc {
+    color: #999;
+    margin-top: 10px;
+}
+
+.dark-mode .dashboard-placeholder-desc {
+    color: #888;
+}
+    width: 100%;
+    height: calc(100vh - 100px);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .dashboard-viewer {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+}
+
+.spinner {
+    border: 4px solid #f0f0f0;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.dashboard-title {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.dark-mode .dashboard-title {
+    color: #f0f0f0;
+}
+
+.dashboard-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.control-btn {
+    padding: 8px 15px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background: #764ba2;
+    transform: translateY(-2px);
+}
+
+.control-btn.secondary {
+    background: transparent;
+    border: 2px solid #667eea;
+    color: #667eea;
+}
+
+.control-btn.secondary:hover {
+    background: #667eea;
+    color: white;
+}
+
+.dashboard-error {
+    background: #fee;
+    color: #c33;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #c33;
+}
+
+.dashboard-message {
+    background: #efe;
+    color: #3c3;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #3c3;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.dashboard-message.show {
+    display: block;
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="User Profile">
+    <title>User Profile</title>
+    <link rel="shortcut icon" type="image/png" href="../static/favicon.ico">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+    <link rel="stylesheet" href="../static/css/profile.css">
+</head>
+
+<body>
+    <div class="page-container">
+        <!-- Header -->
+        <div class="page-header">
+            <div class="header-top">
+                <h1 class="header-title">👤 User Profile</h1>
+                <div class="header-actions">
+                    <a href="/dashboard-select" class="header-btn secondary">Back to Dashboard</a>
+                    <a href="/logout" class="header-btn">Logout</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-wrapper">
+                <div id="message" class="message"></div>
+
+                <div class="profile-card">
+                    <!-- Profile Header -->
+                    <div class="profile-header">
+                        <div class="profile-avatar">👤</div>
+                        <h2 class="profile-name">{{ user.username }}</h2>
+                        <p class="profile-username">ID: {{ user.id }}</p>
+                    </div>
+
+                    <!-- Profile Information -->
+                    <div class="profile-info">
+                        <div class="info-row">
+                            <span class="info-label">Username:</span>
+                            <span class="info-value">{{ user.username }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Account Created:</span>
+                            <span class="info-value" id="createdDate">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Last Login:</span>
+                            <span class="info-value" id="lastLogin">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Favorites:</span>
+                            <span class="info-value">{{ user.favorites|length }} dashboard(s)</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Recent Dashboards:</span>
+                            <span class="info-value">{{ user.recent_dashboards|length }} item(s)</span>
+                        </div>
+                    </div>
+
+                    <!-- Theme Setting -->
+                    <div class="theme-setting">
+                        <h3 class="theme-setting-title">Theme Preference</h3>
+                        <div class="theme-options">
+                            <div class="theme-option active" data-theme="light">
+                                <div class="theme-icon">☀️</div>
+                                <div class="theme-name">Light</div>
+                            </div>
+                            <div class="theme-option" data-theme="dark">
+                                <div class="theme-icon">🌙</div>
+                                <div class="theme-name">Dark</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="profile-actions">
+                        <button class="btn-action secondary" onclick="window.location.href='/dashboard-select'">
+                            Return Dashboards
+                        </button>
+                        <button class="btn-action primary" onclick="handleLogout()">
+                            Log Out
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="page-footer">
+            <p>&copy; 2024 Professional Dashboard. All rights reserved.</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../static/js/jquery-3.4.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script>
+        const userData = {{ user|tojson }};
+
+        // Format timestamps
+        function formatDate(isoDate) {
+            if (!isoDate) return 'Never';
+            const date = new Date(isoDate);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        }
+
+        // Load user data
+        function loadProfile() {
+            document.getElementById('createdDate').textContent = formatDate(userData.created_at);
+            document.getElementById('lastLogin').textContent = formatDate(userData.last_login);
+
+            // Set active theme
+            const theme = userData.theme || 'light';
+            document.querySelectorAll('.theme-option').forEach(option => {
+                if (option.getAttribute('data-theme') === theme) {
+                    option.classList.add('active');
+                } else {
+                    option.classList.remove('active');
+                }
+            });
+        }
+
+        // Theme selection
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const theme = option.getAttribute('data-theme');
+
+                fetch('/api/user/preferences', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({theme: theme})
+                }).then(r => r.json()).then(data => {
+                    if (data.success) {
+                        document.querySelectorAll('.theme-option').forEach(o => {
+                            o.classList.remove('active');
+                        });
+                        option.classList.add('active');
+                        showMessage('Theme updated successfully', 'success');
+                    }
+                });
+            });
+        });
+
+        function showMessage(msg, type) {
+            const elem = document.getElementById('message');
+            elem.textContent = msg;
+            elem.className = 'message ' + type;
+            setTimeout(() => {
+                elem.className = 'message';
+            }, 3000);
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '/logout';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadProfile);
+    </script>
+</body>
+
+</html>

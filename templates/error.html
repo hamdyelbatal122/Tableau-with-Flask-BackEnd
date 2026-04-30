@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Error Page">
+    <title>Error - Dashboard</title>
+    <link rel="icon" type="image/png" href="../static/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/error.css">
+</head>
+
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
+        🌙
+    </button>
+
+    <!-- Error Container -->
+    <div class="error-container">
+        <div class="error-card">
+            <div class="error-icon">❌</div>
+
+            <div class="error-code">{{ error_code }}</div>
+
+            <h1 class="error-title">{{ error_message }}</h1>
+
+            <p class="error-message">
+                {{ error_description }}
+            </p>
+
+            {% if error_code != 404 %}
+            <div class="error-description">
+                <strong>What happened?</strong>
+                <p>An unexpected error occurred while processing your request. Please try again later or contact support if the problem persists.</p>
+            </div>
+            {% endif %}
+
+            <div class="error-actions">
+                <a href="/" class="btn btn-primary">Go to Homepage</a>
+                <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                themeToggle.textContent = '☀️';
+            } else {
+                body.classList.remove('dark-mode');
+                themeToggle.textContent = '🌙';
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            loadTheme();
+        });
+
+        document.addEventListener('DOMContentLoaded', loadTheme);
+    </script>
+</body>
+
+</html>
