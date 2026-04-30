@@ -485,6 +485,4 @@ For issues, questions, or feature requests:
 
 ---
 
----
-
 **Created with ❤️ for professional dashboard management**
