@@ -1,0 +1,33 @@
+# Flask & Web Framework
+Flask==3.0.0
+Flask-Login==0.6.3
+Werkzeug==3.0.1
+Jinja2==3.1.2
+
+# Form & Validation
+Flask-WTF==1.2.1
+WTForms==3.1.1
+
+# API & HTTP
+requests==2.31.0
+tableauserverclient==0.29
+
+# Security & Environment
+python-dotenv==1.0.0
+cryptography==41.0.7
+
+# Database & File Handling
+openpyxl==3.1.2
+python-dateutil==2.8.2
+
+# Logging & Monitoring
+python-json-logger==2.0.7
+
+# Development & Testing
+pytest==7.4.3
+pytest-cov==4.1.0
+black==23.12.1
+flake8==6.1.0
+
+# Performance
+cachetools==5.3.2

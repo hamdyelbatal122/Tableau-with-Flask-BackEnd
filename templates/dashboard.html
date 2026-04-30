@@ -1,106 +1,186 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="../static/images/favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Dashboard View">
+    <title>Dashboard Viewer</title>
+    <link rel="shortcut icon" type="image/png" href="../static/favicon.ico">
     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
-
-    <!-- others css -->
-    <link rel="stylesheet" href="../static/css/default-css.css">
-    <link rel="stylesheet" href="../static/css/styles.css">
     <link rel="stylesheet" href="../static/css/dashboard.css">
+    <link rel="stylesheet" href="../static/css/viewer.css">
 </head>
 
-<body onload="loadTableauDashboard()">
-
-    <!-- preloader area start -->
-    <div id="preloader">
-        <div class="loader"></div>
-    </div>
-    <!-- preloader area end -->
-
-    <!-- page container area start -->
+<body>
     <div class="page-container">
-        <!-- main content area start -->
-        <div class="main-content">
-
-            <!-- page title area start -->
-            <div class="page-title-area">
-                <div class="row align-items-center">
-                    <div class="col-sm-6">
-                        <div class="breadcrumbs-area clearfix">
-                            <h4 class="page-title pull-left">Dashboard</h4>
-                            <ul class="breadcrumbs pull-left">
-                                <li><a href="/homepage">Home</a></li>
-                                <li><span>Dashboard</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-2"></div>
-
-                    <div class="col-sm-4 clearfix float-right">
-                        <div class="user-profile pull-right">
-                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">
-                                <!-- print the username of the current logged user (this is handled by Flask) -->
-                                Hi {{ current_user.name }}{{ auth_token }}!
-                            </h4>
-
-                            <!--dropdown icon start-->
-                            <svg id="dropdown-icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20"
-                                height="20" viewBox="0 0 172 172" style=" fill:#000000;">
-                                <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
-                                    stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray=""
-                                    stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none"
-                                    text-anchor="none" style="mix-blend-mode: normal">
-                                    <path d="M0,172v-172h172v172z" fill="none"></path>
-                                    <g fill="#ffffff">
-                                        <g id="surface1">
-                                            <path d="M13.76,58.48l72.24,75.68l72.24,-75.68z"></path>
-                                        </g>
-                                    </g>
-                                </g>
-                            </svg>
-                            <!--dropwodn icon ends-->
-
-                            <div class="dropdown-menu">
-                                <div>
-                                    <a class="dropdown-item" href="/logout">Log Out</a>
-                                </div>
-                                <div>
-                                    <a class="dropdown-item" onclick="exportPDF()" id="exportPDF">Download the PDF</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Header -->
+        <div class="page-header">
+            <div class="header-top">
+                <h1 class="header-title">📊 Dashboard Viewer</h1>
+                <div class="header-actions">
+                    <button class="header-btn secondary" id="favBtn" title="Add to favorites">
+                        🤍 Favorite
+                    </button>
+                    <button class="header-btn secondary" id="themeBtn" title="Toggle dark mode">
+                        🌙 Dark
+                    </button>
+                    <a href="/dashboard-select" class="header-btn">
+                        ← Back
+                    </a>
                 </div>
             </div>
-            <!-- page title area end -->
-            <div class="main-content-inner center">
-                <div class="col-md-1"></div>
-                <div class="col-md-10 center" id="vizContainer"></div>
-                <div class="col-md-1"></div>
+        </div>
 
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-wrapper">
+                <div id="message" class="dashboard-message"></div>
 
+                <div class="dashboard-header" id="dashboardHeader">
+                    <h2 class="dashboard-title" id="dashboardTitle">Dashboard</h2>
+                    <div class="dashboard-controls">
+                        <button class="control-btn secondary" onclick="// Refresh dashboard">
+                            🔄 Refresh
+                        </button>
+                        <button class="control-btn secondary" onclick="// Full screen">
+                            ⛶ Fullscreen
+                        </button>
+                    </div>
+                </div>
+
+                <div id="viewer">
+                    <div class="loading-spinner" id="loader">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+
+                <div id="error" class="dashboard-error hidden"></div>
             </div>
         </div>
-        <!-- main content area end -->
 
+        <!-- Footer -->
+        <div class="page-footer">
+            <p>&copy; 2024 Professional Dashboard. All rights reserved.</p>
+        </div>
     </div>
-    <!-- page container area end -->
-    <script src="../static/js/vendor/jquery-2.2.4.min.js"></script>
-    <script src="../static/js/popper.min.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
-    <script src="../static/js/metisMenu.min.js"></script>
-    <script src="../static/js/jquery.slimscroll.min.js"></script>
-    <script src="../static/js/scripts.js"></script>
 
-    <!-- Custom scripts -->
-    <script type="text/javascript" src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
-    <script type="text/javascript" src="../static/js/mainScript.js"></script>
+    <!-- Scripts -->
+    <script src="../static/js/jquery-3.4.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script>
+        const dashboardId = '{{ dashboard_id }}';
+        let isFavorite = false;
+
+        // Get dashboard ID from URL
+        function getDashboardId() {
+            const path = window.location.pathname;
+            return path.split('/').pop();
+        }
+
+        // Load dashboard
+        function loadDashboard() {
+            const id = getDashboardId();
+            
+            // Show loading state
+            document.getElementById('dashboardHeader').classList.remove('hidden');
+            document.getElementById('loader').classList.remove('hidden');
+
+            // Simulate dashboard loading
+            // In production, this would embed the actual Tableau dashboard
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+
+                // Create dashboard container
+                const viewer = document.getElementById('viewer');
+                viewer.innerHTML = `
+                    <div class="dashboard-placeholder">
+                        <p class="dashboard-placeholder-text">
+                            📊 Dashboard ID: ${id}
+                        </p>
+                        <p class="dashboard-placeholder-desc">
+                            Dashboard content would be embedded here via Tableau Server API
+                        </p>
+                    </div>
+                `;
+
+                // Track view
+                fetch(`/api/dashboard/${id}/view`, { method: 'POST' });
+
+                // Load favorite status
+                loadFavoriteStatus(id);
+            }, 1000);
+        }
+
+        // Load favorite status
+        function loadFavoriteStatus(dashboardId) {
+            fetch('/api/dashboards')
+                .then(r => r.json())
+                .then(data => {
+                    if (data.favorites.includes(dashboardId)) {
+                        isFavorite = true;
+                        document.getElementById('favBtn').textContent = '❤️ Favorite';
+                    }
+                })
+                .catch(err => console.error('Error loading favorites:', err));
+        }
+
+        // Theme toggle
+        document.getElementById('themeBtn').addEventListener('click', () => {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            const isDark = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+            document.getElementById('themeBtn').textContent = isDark ? '☀️ Light' : '🌙 Dark';
+
+            // Update theme preference
+            fetch('/api/user/preferences', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({theme: isDark ? 'dark' : 'light'})
+            });
+        });
+
+        // Favorite button
+        document.getElementById('favBtn').addEventListener('click', () => {
+            const id = getDashboardId();
+            const newFavStaus = !isFavorite;
+
+            fetch(`/api/dashboard/${id}/favorite`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({favorite: !isFavorite})
+            }).then(r => r.json()).then(data => {
+                if (data.success) {
+                    isFavorite = !isFavorite;
+                    document.getElementById('favBtn').textContent = isFavorite ? '❤️ Favorite' : '🤍 Favorite';
+
+                    // Show message
+                    const msg = document.getElementById('message');
+                    msg.textContent = isFavorite ? 'Added to favorites' : 'Removed from favorites';
+                    msg.classList.add('show');
+                    setTimeout(() => msg.classList.remove('show'), 3000);
+                }
+            });
+        });
+
+        // Load theme preference
+        function loadTheme() {
+            const theme = localStorage.getItem('theme') || 'light';
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeBtn').textContent = '☀️ Light';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            loadDashboard();
+        });
+    </script>
 </body>
 
 </html>
