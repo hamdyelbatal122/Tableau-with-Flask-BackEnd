@@ -485,12 +485,6 @@ For issues, questions, or feature requests:
 
 ---
 
-## 📞 Contact & Support
-
-**Project:** Professional Tableau Dashboard Application  
-**Version:** 2.0.0  
-**Last Updated:** April 2024
-
 ---
 
 **Created with ❤️ for professional dashboard management**
