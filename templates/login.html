@@ -2,53 +2,177 @@
 <html lang="en">
 
 <head>
-    <title>Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!--===============================================================================================-->
+    <meta name="description" content="Professional Dashboard Login Portal">
+    <title>Dashboard Login</title>
+    
     <link rel="icon" type="image/png" href="../static/favicon.ico" />
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/css/util.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../static/css/login.css">
-    <!--===============================================================================================-->
 </head>
 
 <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle dark mode" aria-label="Toggle theme">
+        <svg id="themeIcon" fill="currentColor" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5" id="sunCircle" class="sun-circle"/>
+            <line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"/>
+            <line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"/>
+            <line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/>
+            <line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"/>
+        </svg>
+    </button>
 
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100 p-l-55 p-r-55 p-t-30 p-b-40">
-                <form class="login100-form validate-form" id="login-form" method="POST">
-                    <span class="login100-form-title p-b-25 ">
-                        Login form
-                    </span>
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="login-card">
+            <!-- Header -->
+            <div class="login-header">
+                <h1>🎯 Dashboard</h1>
+                <p>Welcome back - Please sign in to continue</p>
+            </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="Username is required">
-                        <input class="input100" type="text" name="username" placeholder="Username" required>
-                        <span class="focus-input100-1"></span>
-                        <span class="focus-input100-2"></span>
-                    </div>
+            <!-- Error Message -->
+            {% if error %}
+            <div class="error-message">
+                <strong>Error:</strong> {{ error }}
+            </div>
+            {% endif %}
 
-                    <div class="wrap-input100 rs1 validate-input" data-validate="Password is required">
-                        <input class="input100" type="password" name="password" placeholder="Password" required>
-                        <span class="focus-input100-1"></span>
-                        <span class="focus-input100-2"></span>
-                    </div>
+            <!-- Success Message -->
+            {% if message %}
+            <div class="success-message">
+                {{ message }}
+            </div>
+            {% endif %}
 
-                    <div class="container-login100-form-btn m-t-20">
-                        <button class="login100-form-btn">
-                            Sign in
-                        </button>
-                    </div>
+            <!-- Login Form -->
+            <form id="loginForm" method="POST">
+                <!-- Username Field -->
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                        autocomplete="username"
+                        minlength="3"
+                        maxlength="50"
+                    >
+                </div>
 
-                    {% if error %}<div class="error">
-                         <h4>Username or password incorrect.</h4>
-                    </div> {% endif %}
-                </form>
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                        minlength="6"
+                    >
+                </div>
+
+                <!-- Remember Me Checkbox -->
+                <div class="form-group remember-group">
+                    <input 
+                        type="checkbox" 
+                        id="rememberMe" 
+                        name="rememberMe"
+                    >
+                    <label for="rememberMe">Remember me</label>
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" class="login-btn" id="loginBtn">
+                    Sign In
+                </button>
+            </form>
+
+            <!-- Footer -->
+            <div class="footer-text">
+                <p>&copy; 2024 Professional Dashboard. All rights reserved.</p>
             </div>
         </div>
     </div>
+
+    <!-- Scripts -->
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script>
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Load theme preference from localStorage
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+            }
+        }
+
+        // Toggle theme handler
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        });
+
+        // Form validation and submission
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+
+        loginForm.addEventListener('submit', (e) => {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
+
+            if (!username) {
+                e.preventDefault();
+                alert('Please enter your username');
+                usernameInput.focus();
+                return;
+            }
+
+            if (!password) {
+                e.preventDefault();
+                alert('Please enter your password');
+                passwordInput.focus();
+                return;
+            }
+
+            // Show loading state
+            loginBtn.disabled = true;
+            loginBtn.classList.add('loading');
+            const originalText = loginBtn.textContent;
+            loginBtn.textContent = 'Signing in...';
+
+            // Reset button after 5 seconds if still disabled (fallback)
+            setTimeout(() => {
+                if (loginBtn.disabled) {
+                    loginBtn.disabled = false;
+                    loginBtn.classList.remove('loading');
+                    loginBtn.textContent = originalText;
+                }
+            }, 5000);
+        });
+
+        // Load theme on page load
+        document.addEventListener('DOMContentLoaded', loadTheme);
+    </script>
 </body>
 
 </html>
