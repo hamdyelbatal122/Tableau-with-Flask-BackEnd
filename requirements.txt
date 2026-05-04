@@ -14,7 +14,7 @@ tableauserverclient==0.29
 
 # Security & Environment
 python-dotenv==1.0.0
-cryptography==41.0.7
+cryptography==46.0.7
 
 # Database & File Handling
 openpyxl==3.1.2
