@@ -26,7 +26,7 @@ python-json-logger==2.0.7
 # Development & Testing
 pytest==7.4.3
 pytest-cov==4.1.0
-black==23.12.1
+black==26.3.1
 flake8==6.1.0
 
 # Performance
