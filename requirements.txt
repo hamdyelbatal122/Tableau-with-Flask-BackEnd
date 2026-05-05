@@ -13,7 +13,7 @@ requests==2.33.0
 tableauserverclient==0.29
 
 # Security & Environment
-python-dotenv==1.0.0
+python-dotenv==1.2.2
 cryptography==46.0.7
 
 # Database & File Handling
